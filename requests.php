@@ -71,45 +71,25 @@ if ($_SESSION['RollNo']) {
                         </div>
                         <!--/.sidebar-->
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="span3">
+                        <center>
+                            <a href="issue_requests.php" class="btn btn-info" ><image width="100px" src="images/book2.png"></image><p>Issue Requests</p></a>
+                        </center>
+                    </div>
+                    <div class="span3">
+                        <center>
+                            <a href="renew_requests.php" class="btn btn-info"><image width="100px" src="images/book3.png"></image><p>Renew Request</p></a>
+                        </center>
+                    </div> 
+                    <div class="span3">
+                        <center>
+                            <a href="return_requests.php" class="btn btn-info"><image width="100px" src="images/book4.png"></image><p>Return Requests</p></a>
+                        </center>
+                    </div>
                     <!--/.span3-->
-
-                    <div class="span9">
-                    <div class="content">
-
-                        <div class="module">
-                            <div class="module-head">
-                                <h3>Send a message</h3>
-                            </div>
-                            <div class="module-body">
-
-                                    <br >
-
-                                    <form class="form-horizontal row-fluid" action="message.php" method="post">
-                                        <div class="control-group">
-                                            <label class="control-label" for="Rollno"><b>Receiver Roll No:</b></label>
-                                            <div class="controls">
-                                                <input type="text" id="RollNo" name="RollNo" placeholder="RollNo" class="span8" required>
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="Message"><b>Message:</b></label>
-                                            <div class="controls">
-                                                <input type="text" id="Message" name="Message" placeholder="Enter Message" class="span8" required>
-                                            </div>
-                                            <hr>
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <button type="submit" name="submit"class="btn">Add Message</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                            </div>
-                        </div>
-
-                        
-                        
-                    </div><!--/.content-->
-                </div>
                     <!--/.span9-->
                 </div>
             </div>
@@ -129,25 +109,7 @@ if ($_SESSION['RollNo']) {
         <script src="scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
         <script src="scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
         <script src="scripts/common.js" type="text/javascript"></script>
-
-<?php
-if(isset($_POST['submit']))
-{
-    $rollno=$_POST['RollNo'];
-    $message=$_POST['Message'];
-
-$sql1="insert into LMS.message (RollNo,Msg,Date,Time) values ('$rollno','$message',curdate(),curtime())";
-
-if($conn->query($sql1) === TRUE){
-echo "<script type='text/javascript'>alert('Success')</script>";
-}
-else
-{//echo $conn->error;
-echo "<script type='text/javascript'>alert('Error')</script>";
-}
-    
-}
-?>
+      
     </body>
 
 </html>

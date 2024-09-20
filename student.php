@@ -74,42 +74,69 @@ if ($_SESSION['RollNo']) {
                     <!--/.span3-->
 
                     <div class="span9">
-                    <div class="content">
-
-                        <div class="module">
-                            <div class="module-head">
-                                <h3>Send a message</h3>
-                            </div>
-                            <div class="module-body">
-
-                                    <br >
-
-                                    <form class="form-horizontal row-fluid" action="message.php" method="post">
+                        <form class="form-horizontal row-fluid" action="student.php" method="post">
                                         <div class="control-group">
-                                            <label class="control-label" for="Rollno"><b>Receiver Roll No:</b></label>
+                                            <label class="control-label" for="Search"><b>Search:</b></label>
                                             <div class="controls">
-                                                <input type="text" id="RollNo" name="RollNo" placeholder="RollNo" class="span8" required>
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="Message"><b>Message:</b></label>
-                                            <div class="controls">
-                                                <input type="text" id="Message" name="Message" placeholder="Enter Message" class="span8" required>
-                                            </div>
-                                            <hr>
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <button type="submit" name="submit"class="btn">Add Message</button>
+                                                <input type="text" id="title" name="title" placeholder="Enter Name/Roll No of Student" class="span8" required>
+                                                <button type="submit" name="submit"class="btn">Search</button>
                                             </div>
                                         </div>
                                     </form>
-                            </div>
-                        </div>
+                                    <br>
+                                    <?php
+                                    if(isset($_POST['submit']))
+                                        {$s=$_POST['title'];
+                                            $sql="select * from LMS.user where (RollNo='$s' or Name like '%$s%') and RollNo<>'ADMIN'";
+                                        }
+                                    else
+                                        $sql="select * from LMS.user where RollNo<>'ADMIN'";
 
-                        
-                        
-                    </div><!--/.content-->
-                </div>
+                                    $result=$conn->query($sql);
+                                    $rowcount=mysqli_num_rows($result);
+
+                                    if(!($rowcount))
+                                        echo "<br><center><h2><b><i>No Results</i></b></h2></center>";
+                                    else
+                                    {
+
+                                    
+                                    ?>
+                        <table class="table" id = "tables">
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Roll No.</th>
+                                      <th>Email id</th>                                      
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                    <?php
+                            
+                            //$result=$conn->query($sql);
+                            while($row=$result->fetch_assoc())
+                            {
+
+                                $email=$row['EmailId'];
+                                $name=$row['Name'];
+                                $rollno=$row['RollNo'];
+                            ?>
+                                    <tr>
+                                      <td><?php echo $name ?></td>
+                                      <td><?php echo $rollno ?></td>
+                                      <td><?php echo $email ?></td>                                      
+                                        <td>
+                                        <center>
+                                            <a href="studentdetails.php?id=<?php echo $rollno; ?>" class="btn btn-success">Details</a>
+                                            <!--a href="remove_student.php?id=<?php echo $rollno; ?>" class="btn btn-danger">Remove</a-->
+                                      </center>
+                                        </td>
+                                    </tr>
+                            <?php }} ?>
+                                  </tbody>
+                                </table>
+                            </div>
                     <!--/.span9-->
                 </div>
             </div>
@@ -129,25 +156,7 @@ if ($_SESSION['RollNo']) {
         <script src="scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
         <script src="scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
         <script src="scripts/common.js" type="text/javascript"></script>
-
-<?php
-if(isset($_POST['submit']))
-{
-    $rollno=$_POST['RollNo'];
-    $message=$_POST['Message'];
-
-$sql1="insert into LMS.message (RollNo,Msg,Date,Time) values ('$rollno','$message',curdate(),curtime())";
-
-if($conn->query($sql1) === TRUE){
-echo "<script type='text/javascript'>alert('Success')</script>";
-}
-else
-{//echo $conn->error;
-echo "<script type='text/javascript'>alert('Error')</script>";
-}
-    
-}
-?>
+      
     </body>
 
 </html>

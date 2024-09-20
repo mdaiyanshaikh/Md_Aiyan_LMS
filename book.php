@@ -57,9 +57,12 @@ if ($_SESSION['RollNo']) {
                                 </a></li>
                                  <li><a href="message.php"><i class="menu-icon icon-inbox"></i>Messages</a>
                                 </li>
+                                <li><a href="student.php"><i class="menu-icon icon-user"></i>Manage Students </a>
+                                </li>
                                 <li><a href="book.php"><i class="menu-icon icon-book"></i>All Books </a></li>
-                                <li><a href="history.php"><i class="menu-icon icon-tasks"></i>Previously Borrowed Books </a></li>
-                                <li><a href="recommendations.php"><i class="menu-icon icon-list"></i>Recommend Books </a></li>
+                                <li><a href="addbook.php"><i class="menu-icon icon-edit"></i>Add Books </a></li>
+                                <li><a href="requests.php"><i class="menu-icon icon-tasks"></i>Issue/Return Requests </a></li>
+                                <li><a href="recommendations.php"><i class="menu-icon icon-list"></i>Book Recommendations </a></li>
                                 <li><a href="current.php"><i class="menu-icon icon-list"></i>Currently Issued Books </a></li>
                             </ul>
                             <ul class="widget widget-menu unstyled">
@@ -68,9 +71,9 @@ if ($_SESSION['RollNo']) {
                         </div>
                         <!--/.sidebar-->
                     </div>
-                    <!--/.span3-->
+
                     <div class="span9">
-                        <form class="form-horizontal row-fluid" action="book.php" method="post">
+                  <form class="form-horizontal row-fluid" action="book.php" method="post">
                                         <div class="control-group">
                                             <label class="control-label" for="Search"><b>Search:</b></label>
                                             <div class="controls">
@@ -86,7 +89,7 @@ if ($_SESSION['RollNo']) {
                                             $sql="select * from LMS.book where BookId='$s' or Title like '%$s%'";
                                         }
                                     else
-                                        $sql="select * from LMS.book order by Availability DESC";
+                                        $sql="select * from LMS.book";
 
                                     $result=$conn->query($sql);
                                     $rowcount=mysqli_num_rows($result);
@@ -116,40 +119,27 @@ if ($_SESSION['RollNo']) {
                                 $bookid=$row['BookId'];
                                 $name=$row['Title'];
                                 $avail=$row['Availability'];
+                            
+                           
                             ?>
                                     <tr>
                                       <td><?php echo $bookid ?></td>
                                       <td><?php echo $name ?></td>
-                                      <td><b><?php 
-                                           if($avail > 0)
-                                              echo "<font color=\"green\">AVAILABLE</font>";
-                                            else
-                                            	echo "<font color=\"red\">NOT AVAILABLE</font>";
-
-                                                 ?>
-                                                 	
-                                                 </b></td>
-                                      <td><center><a href="bookdetails.php?id=<?php echo $bookid; ?>" class="btn btn-primary">Details</a>
-                                      	<?php
-                                      	if($avail > 0)
-                                      		echo "<a href=\"issue_request.php?id=".$bookid."\" class=\"btn btn-success\">Issue</a>";
-                                        ?>
+                                      <td><b><?php echo $avail ?></b></td>
+                                        <td><center>
+                                            <a href="bookdetails.php?id=<?php echo $bookid; ?>" class="btn btn-primary">Details</a>
+                                            <a href="edit_book_details.php?id=<?php echo $bookid; ?>" class="btn btn-success">Edit</a>
                                         </center></td>
                                     </tr>
                                <?php }} ?>
                                </tbody>
                                 </table>
                             </div>
-                    <!--/.span3-->
-                    <!--/.span9-->
-                
-                    <!--/.span3-->
-                    <!--/.span9-->
-                </div>
                     <!--/.span9-->
                 </div>
             </div>
             <!--/.container-->
+        </div>
 <div class="footer">
             <div class="container">
                 <b class="copyright">&copy; 2024 Library Management System </b>All rights reserved.
@@ -168,6 +158,7 @@ if ($_SESSION['RollNo']) {
     </body>
 
 </html>
+
 
 <?php }
 else {

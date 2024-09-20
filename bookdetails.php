@@ -57,9 +57,12 @@ if ($_SESSION['RollNo']) {
                                 </a></li>
                                  <li><a href="message.php"><i class="menu-icon icon-inbox"></i>Messages</a>
                                 </li>
+                                <li><a href="student.php"><i class="menu-icon icon-user"></i>Manage Students </a>
+                                </li>
                                 <li><a href="book.php"><i class="menu-icon icon-book"></i>All Books </a></li>
-                                <li><a href="history.php"><i class="menu-icon icon-tasks"></i>Previously Borrowed Books </a></li>
-                                <li><a href="recommendations.php"><i class="menu-icon icon-list"></i>Recommend Books </a></li>
+                                <li><a href="addbook.php"><i class="menu-icon icon-edit"></i>Add Books </a></li>
+                                <li><a href="requests.php"><i class="menu-icon icon-tasks"></i>Issue/Return Requests </a></li>
+                                <li><a href="recommendations.php"><i class="menu-icon icon-list"></i>Book Recommendations </a></li>
                                 <li><a href="current.php"><i class="menu-icon icon-list"></i>Currently Issued Books </a></li>
                             </ul>
                             <ul class="widget widget-menu unstyled">
@@ -68,8 +71,7 @@ if ($_SESSION['RollNo']) {
                         </div>
                         <!--/.sidebar-->
                     </div>
-                    <!--/.span3-->
-                    
+
                     <div class="span9">
                         <div class="content">
 
@@ -89,6 +91,7 @@ if ($_SESSION['RollNo']) {
                                 $publisher=$row['Publisher'];
                                 $year=$row['Year'];
                                 $avail=$row['Availability'];
+
                                 echo "<b>Book ID:</b> ".$bookid."<br><br>";
                                 echo "<b>Title:</b> ".$name."<br><br>";
                                 $sql1="select * from LMS.author where BookId='$bookid'";
@@ -119,13 +122,9 @@ if ($_SESSION['RollNo']) {
                     <!--/.span3-->
                     <!--/.span9-->
                 </div>
-                    
-                    <!--/.span9-->
-                </div>
-                    <!--/.span9-->
-                </div>
             </div>
             <!--/.container-->
+        </div>
 <div class="footer">
             <div class="container">
                 <b class="copyright">&copy; 2024 Library Management System </b>All rights reserved.
@@ -144,6 +143,7 @@ if ($_SESSION['RollNo']) {
     </body>
 
 </html>
+
 
 <?php }
 else {

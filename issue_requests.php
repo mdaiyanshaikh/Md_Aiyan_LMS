@@ -71,45 +71,54 @@ if ($_SESSION['RollNo']) {
                         </div>
                         <!--/.sidebar-->
                     </div>
-                    <!--/.span3-->
-
                     <div class="span9">
-                    <div class="content">
-
-                        <div class="module">
-                            <div class="module-head">
-                                <h3>Send a message</h3>
+                        <center>
+                        <a href="issue_requests.php" class="btn btn-info">Issue Requests</a>
+                        <a href="renew_requests.php" class="btn btn-info">Renew Request</a>
+                        <a href="return_requests.php" class="btn btn-info">Return Requests</a>
+                        </center>
+                        <h1><i>Issue Requests</i></h1>
+                        <table class="table" id = "tables">
+                                  <thead>
+                                    <tr>
+                                      <th>Roll Number</th>
+                                      <th>Book Id</th>
+                                      <th>Book Name</th>
+                                      <th>Availabilty</th>
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <?php
+                            $sql="select * from LMS.record,LMS.book where Date_of_Issue is NULL and record.BookId=book.BookId order by Time";
+                            $result=$conn->query($sql);
+                            while($row=$result->fetch_assoc())
+                            {
+                                $bookid=$row['BookId'];
+                                $rollno=$row['RollNo'];
+                                $name=$row['Title'];
+                                $avail=$row['Availability'];
+                            
+                                
+                            ?>
+                                    <tr>
+                                      <td><?php echo strtoupper($rollno) ?></td>
+                                      <td><?php echo $bookid ?></td>
+                                      <td><b><?php echo $name ?></b></td>
+                                      <td><?php echo $avail ?></td>
+                                      <td><center>
+                                        <?php
+                                        if($avail > 0)
+                                        {echo "<a href=\"accept.php?id1=".$bookid."&id2=".$rollno."\" class=\"btn btn-success\">Accept</a>";}
+                                         ?>
+                                        <a href="reject.php?id1=<?php echo $bookid ?>&id2=<?php echo $rollno ?>" class="btn btn-danger">Reject</a>
+                                    </center></td>
+                                    </tr>
+                               <?php } ?>
+                               </tbody>
+                                </table>
                             </div>
-                            <div class="module-body">
-
-                                    <br >
-
-                                    <form class="form-horizontal row-fluid" action="message.php" method="post">
-                                        <div class="control-group">
-                                            <label class="control-label" for="Rollno"><b>Receiver Roll No:</b></label>
-                                            <div class="controls">
-                                                <input type="text" id="RollNo" name="RollNo" placeholder="RollNo" class="span8" required>
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="Message"><b>Message:</b></label>
-                                            <div class="controls">
-                                                <input type="text" id="Message" name="Message" placeholder="Enter Message" class="span8" required>
-                                            </div>
-                                            <hr>
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <button type="submit" name="submit"class="btn">Add Message</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                            </div>
-                        </div>
-
-                        
-                        
-                    </div><!--/.content-->
-                </div>
+                    <!--/.span3-->
                     <!--/.span9-->
                 </div>
             </div>
@@ -129,25 +138,7 @@ if ($_SESSION['RollNo']) {
         <script src="scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
         <script src="scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
         <script src="scripts/common.js" type="text/javascript"></script>
-
-<?php
-if(isset($_POST['submit']))
-{
-    $rollno=$_POST['RollNo'];
-    $message=$_POST['Message'];
-
-$sql1="insert into LMS.message (RollNo,Msg,Date,Time) values ('$rollno','$message',curdate(),curtime())";
-
-if($conn->query($sql1) === TRUE){
-echo "<script type='text/javascript'>alert('Success')</script>";
-}
-else
-{//echo $conn->error;
-echo "<script type='text/javascript'>alert('Error')</script>";
-}
-    
-}
-?>
+      
     </body>
 
 </html>

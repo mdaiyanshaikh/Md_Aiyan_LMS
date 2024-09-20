@@ -72,45 +72,41 @@ if ($_SESSION['RollNo']) {
                         <!--/.sidebar-->
                     </div>
                     <!--/.span3-->
-
+                    
                     <div class="span9">
-                    <div class="content">
+                        <div class="content">
 
                         <div class="module">
                             <div class="module-head">
-                                <h3>Send a message</h3>
+                                <h3>Student Details</h3>
                             </div>
                             <div class="module-body">
+                        <?php
+                            $rno=$_GET['id'];
+                            $sql="select * from LMS.user where RollNo='$rno'";
+                            $result=$conn->query($sql);
+                            $row=$result->fetch_assoc();    
+                            
+                                $name=$row['Name'];
+                                $category=$row['Category'];
+                                $email=$row['EmailId'];
+                                $mobno=$row['MobNo'];
 
-                                    <br >
 
-                                    <form class="form-horizontal row-fluid" action="message.php" method="post">
-                                        <div class="control-group">
-                                            <label class="control-label" for="Rollno"><b>Receiver Roll No:</b></label>
-                                            <div class="controls">
-                                                <input type="text" id="RollNo" name="RollNo" placeholder="RollNo" class="span8" required>
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="Message"><b>Message:</b></label>
-                                            <div class="controls">
-                                                <input type="text" id="Message" name="Message" placeholder="Enter Message" class="span8" required>
-                                            </div>
-                                            <hr>
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <button type="submit" name="submit"class="btn">Add Message</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                            </div>
+                                echo "<b><u>Name:</u></b> ".$name."<br><br>";
+                                echo "<b><u>Category:</u></b> ".$category."<br><br>";
+                                echo "<b><u>Roll No:</u></b> ".$rno."<br><br>";
+                                echo "<b><u>Email Id:</u></b> ".$email."<br><br>";
+                                echo "<b><u>Mobile No:</u></b> ".$mobno."<br><br>"; 
+                            ?>
+                            
+                        <a href="student.php" class="btn btn-primary">Go Back</a>                             
+                               </div>
+                           </div>
                         </div>
-
-                        
-                        
-                    </div><!--/.content-->
-                </div>
+                    </div>
                     <!--/.span9-->
+
                 </div>
             </div>
             <!--/.container-->
@@ -129,25 +125,7 @@ if ($_SESSION['RollNo']) {
         <script src="scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
         <script src="scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
         <script src="scripts/common.js" type="text/javascript"></script>
-
-<?php
-if(isset($_POST['submit']))
-{
-    $rollno=$_POST['RollNo'];
-    $message=$_POST['Message'];
-
-$sql1="insert into LMS.message (RollNo,Msg,Date,Time) values ('$rollno','$message',curdate(),curtime())";
-
-if($conn->query($sql1) === TRUE){
-echo "<script type='text/javascript'>alert('Success')</script>";
-}
-else
-{//echo $conn->error;
-echo "<script type='text/javascript'>alert('Error')</script>";
-}
-    
-}
-?>
+      
     </body>
 
 </html>

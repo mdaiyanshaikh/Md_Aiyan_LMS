@@ -2,6 +2,9 @@
 require('dbconn.php');
 ?>
 
+<?php 
+if ($_SESSION['RollNo']) {
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,9 +57,12 @@ require('dbconn.php');
                                 </a></li>
                                  <li><a href="message.php"><i class="menu-icon icon-inbox"></i>Messages</a>
                                 </li>
+                                <li><a href="student.php"><i class="menu-icon icon-user"></i>Manage Students </a>
+                                </li>
                                 <li><a href="book.php"><i class="menu-icon icon-book"></i>All Books </a></li>
-                                <li><a href="history.php"><i class="menu-icon icon-tasks"></i>Previously Borrowed Books </a></li>
-                                <li><a href="recommendations.php"><i class="menu-icon icon-list"></i>Recommend Books </a></li>
+                                <li><a href="addbook.php"><i class="menu-icon icon-edit"></i>Add Books </a></li>
+                                <li><a href="requests.php"><i class="menu-icon icon-tasks"></i>Issue/Return Requests </a></li>
+                                <li><a href="recommendations.php"><i class="menu-icon icon-list"></i>Book Recommendations </a></li>
                                 <li><a href="current.php"><i class="menu-icon icon-list"></i>Currently Issued Books </a></li>
                             </ul>
                             <ul class="widget widget-menu unstyled">
@@ -66,11 +72,12 @@ require('dbconn.php');
                         <!--/.sidebar-->
                     </div>
                     <!--/.span3-->
+                    
                     <div class="span9">
-                    	<center>
-                           	<div class="card" style="width: 50%;"> 
-                    			<img class="card-img-top" src="images/profile2.png" alt="Card image cap">
-                    			<div class="card-body">
+                        <center>
+                            <div class="card" style="width: 50%;"> 
+                                <img class="card-img-top" src="images/profile2.png" alt="Card image cap">
+                                <div class="card-body">
 
                                 <?php
                                 $rollno = $_SESSION['RollNo'];
@@ -83,24 +90,20 @@ require('dbconn.php');
                                 $email=$row['EmailId'];
                                 $mobno=$row['MobNo'];
                                 ?>    
-                    				<i>
-                    				<h1 class="card-title"><center><?php echo $name ?></center></h1>
-                    				<br>
-                    				<p><b>Email ID: </b><?php echo $email ?></p>
-                    				<br>
-                    				<p><b>Roll No: </B><?php echo $rollno ?></p>
-                    				<br>
-                    				<p><b>Category: </b><?php echo $category ?></p>
-                    				<br>
-                    				<p><b>Mobile number: </b><?php echo $mobno ?></p>
-                    				</b>
+                                    <i>
+                                    <h1 class="card-title"><center><?php echo $name ?></center></h1>
+                                    <br>
+                                    <p><b>Email ID: </b><?php echo $email ?></p>
+                                    <br>
+                                    <p><b>Mobile number: </b><?php echo $mobno ?></p>
+                                    </b>
                                 </i>
 
-                    			</div>
-                    		</div>
-                            <br>
-                            <a href="edit_student_details.php" class="btn btn-primary">Edit Details</a>    
-      					</center>              	
+                                </div>
+                            </div>
+                        <br>
+                        <a href="edit_admin_details.php" class="btn btn-primary">Edit Details</a>
+                        </center>               
                     </div>
                     
                     <!--/.span9-->
@@ -126,3 +129,9 @@ require('dbconn.php');
     </body>
 
 </html>
+
+
+<?php }
+else {
+    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+} ?>
